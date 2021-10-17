@@ -179,7 +179,7 @@ export default function Recipe({data}) {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                   <Card.Body>
-                    <ListGroup as="ul" className='d-flex flex-row flex-wrap'>
+                    <ListGroup as="ul" className={`${styles.ingredientList} 'd-flex'`}>
                       {(ingredients ?? []).map(ingredient => ingredientListItem(ingredient))}
                     </ListGroup>
                   </Card.Body>

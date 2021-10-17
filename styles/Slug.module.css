@@ -17,3 +17,15 @@ h3.header {
 .video {
   max-width: 100%;
 }
+
+.ingredientList {
+  flex-direction: row;
+  columns: 2;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .ingredientList {
+    flex-direction: column;
+  }
+}
