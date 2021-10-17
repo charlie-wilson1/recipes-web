@@ -18,7 +18,7 @@ export default function Home({data}) {
   const scrollToBottom = () => {
     if (typeof window !== "undefined"){
       window.scrollTo({
-        top: 200,
+        top: document.body.scrollHeight,
         behavior: "smooth"
       })
     }
@@ -38,6 +38,7 @@ export default function Home({data}) {
           <div className={styles.splash}>
             <Image
               layout="fill"
+              className={styles.image}
               src="/Cooking-Home-Collection.jpg" 
               alt="recipes landing page image" />
             <h1 className={styles.title}>
