@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { magic } from '../lib/magic';
 import { UserContext } from '../store/userState';
 import EmailForm from '../components/email-form';
+import SocialLogins from '../components/social-logins';
 
 const Login = () => {
   const router = useRouter();
@@ -45,9 +46,17 @@ const Login = () => {
     }
   }
 
+  async function handleLoginWithSocial(provider) {
+    await magic.oauth.loginWithRedirect({
+      provider, // google, apple, etc
+      redirectURI: new URL('/callback', window.location.origin).href, // required redirect to finish social login
+    });
+  }
+
   return (
     <div className='login'>
       <EmailForm disabled={disabled} onEmailSubmit={handleLoginWithEmail} />
+      <SocialLogins onSubmit={handleLoginWithSocial} />
       <style jsx>{`
         .login {
           max-width: 20rem;
