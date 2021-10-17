@@ -64,4 +64,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## TODOs
 
 - fix mobile side nav.
+- add print button for recipes
 - add theming if requested.
