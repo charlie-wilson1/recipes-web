@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.sidebar {
+  min-height: 100vh;
+}
+
+.sideBarMenuContainer {
+  position: fixed;
+  height: 100%;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: 400;
+  color: black;
+}
+
+.subtitle {
+  font-size: 0.8em;
+  color: lightslategray; 
+}
+
+nav.sidebar {
+  -webkit-transition: margin 400ms ease-out;
+  -moz-transition: margin 400ms ease-out;
+  -o-transition: margin 400ms ease-out;
+  transition: margin 400ms ease-out;
+}
+
+
+/* .....NavBar: Fully showing nav bar..... */
+@media (min-width : 1330px) {
+
+  /*Show all nav*/
+  nav.sidebar {
+    margin-left: 0px;
+    float: left;
+  }
+}
+
+
+/*small/medium side display*/
+@media (min-width : 768px) {
+
+  /*allows nav box to use 100% width*/
+  nav.sidebar :global(.navbar-collapse),
+  nav.sidebar :global(.container-fluid) {
+    padding: 0;
+  }
+
+  /*gives sidebar width/height*/
+  nav.sidebar {
+    height: 100%;
+    margin-left: -25vw;
+    float: left;
+    z-index: 8000;
+    margin-bottom: 0px;
+    overflow: hidden;
+  }
+
+  /*give sidebar 100% width;*/
+  nav.sidebar li {
+    width: 100%;
+  }
+
+  /* Move nav to full on mouse over*/
+  nav.sidebar.expanded {
+    margin-left: 0px;
+    width: 25vw;
+    text-overflow: ellipsis;
+  }
+}

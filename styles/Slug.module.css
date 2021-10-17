@@ -1,0 +1,19 @@
+.subtitle {
+  font-size: 0.8em;
+  color: lightslategray; 
+}
+
+h3.header {
+  font-size: 1.8em;
+  margin: 1em 0;
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  max-width: 100%;
+}
+
+.video {
+  max-width: 100%;
+}
