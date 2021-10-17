@@ -6,8 +6,6 @@ This project combined with the [recipes-studio](https://github.com/ajax2012/reci
 
 Please note that this project is not necssary if you don't require an easier viewing experience or don't wish to share your recipes with your friends. If you _just_ need a CMS, the [recipes-studio](https://github.com/ajax2012/recipes-studio) app will be all you will need.
 
-DEV NOTE: the mobile version of this works, but it has some bugs with the "side nav". Please ignore this for now - will be fixed in a future update.
-
 ## Dependencies
 
 - [Sanity CMS](https://sanity.io) with [recipes-studio](https://github.com/ajax2012/recipes-studio)
@@ -65,6 +63,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## TODOs
 
-- fix mobile side nav.
 - add print button for recipes
 - add theming if requested.
