@@ -1,11 +1,12 @@
 import styles from "../styles/Navbar.module.css";
-import { Nav, Navbar, Container, Image, Col, Row } from "react-bootstrap";
+import { Nav, Navbar, Container, Image, Col, Row, Button } from "react-bootstrap";
 import { useState, useContext } from "react";
 import { useRecipeContext } from "../store/recipeState";
 import { UserContext } from "../store/userState";
 import { urlFor } from '../lib/sanity';
 import { magic } from '../lib/magic';
 import { useRouter } from "next/router";
+import {GrClose} from "react-icons/gr";
 
 export default function RecipeNavbar() {
   const router = useRouter();
@@ -26,8 +27,13 @@ export default function RecipeNavbar() {
         <Navbar bg="light" variant="light" className={[styles.sidebar, (expanded ? styles.expanded : null)]} >
           <Navbar.Collapse className="h-100">
             <Container className="vh-100">
-              <div className="my-4">
-                <Navbar.Brand href="/">Recipes</Navbar.Brand>
+              <div className="d-flex justify-content-between my-1 align-items-center">
+                <div>
+                  <Navbar.Brand href="/">Recipes</Navbar.Brand>
+                </div>
+                <Button variant="link" onClick={() => setExpanded(false)}>
+                  <GrClose />
+                </Button>
               </div>
               <Nav className="mr-auto d-block">
                 {(recipes ?? []).map(recipe => 
@@ -54,7 +60,7 @@ export default function RecipeNavbar() {
       </div>
       <Navbar bg="light" variant="light">
         <Container>
-        <Navbar.Toggle className="d-flex" onClick={() => setExpanded(!expanded)} />
+        <Navbar.Toggle className={expanded ? 'd-none' : 'd-flex'} onClick={() => setExpanded(true)} />
           <Navbar>
             <Nav className="mr-auto">
               {user?.loading ? (<></>) : user?.issuer ? (
