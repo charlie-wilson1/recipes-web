@@ -6,7 +6,12 @@ import { Spinner } from "react-bootstrap";
 
 const Callback = () => {
   const router = useRouter();
-  const [setUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
+
+  // Redirect to / if the user is not logged in
+  useEffect(() => {
+    user?.issuer && router.push('/');
+  }, [user]);
 
   // The redirect contains a `provider` query param if the user is logging in with a social provider
   useEffect(() => {
