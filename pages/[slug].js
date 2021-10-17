@@ -1,6 +1,5 @@
 import styles from '../styles/Slug.module.css';
 import ErrorPage from 'next/error';
-import { useRouter } from 'next/router';
 import { groq } from 'next-sanity';
 import { usePreviewSubscription, urlFor, PortableText } from '../lib/sanity';
 import { getClient } from '../lib/sanity.server';
@@ -28,8 +27,11 @@ const currentRecipeQuery = groq`
 `;
 
 export default function Recipe({data}) {
-  const router = useRouter();
   const { handleSetRecipes } = useRecipeContext();
+
+  if (!data?.currentRecipe?.slug) {
+    return <ErrorPage statusCode={404} />
+  }
 
   useEffect(() => {
     handleSetRecipes(data.allRecipes);
@@ -104,10 +106,6 @@ export default function Recipe({data}) {
     initialData: data.currentRecipe,
     enabled: data.currentRecipe?.slug,
   });
-
-  if (!router.isFallback && !data.currentRecipe?.slug) {
-    return <ErrorPage statusCode={404} />
-  }
 
   const {title, image, notes, cookTime, prepTime, youTubeUrls, ingredients, instructions} = currentRecipe;
   const iconStyle = {fontSize: '3em', marginBottom: '0.2em'};
