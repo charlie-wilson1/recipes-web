@@ -4,6 +4,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 This project combined with the [recipes-studio](https://github.com/ajax2012/recipes-studio) app should give you an almost free method of hosting and managing your favorite recipes. Amount of users for CMS: 3. I _highly_ recommend adding whitelisted emails to your Magic link application. This will make it so only people you give permission to have read-only access to your recipes. __I do not accept fault if you add copyrighted material and host it on your own project; I do not have control over your personal CMS.__
 
+Please note that this project is not necssary if you don't require an easier viewing experience or don't wish to share your recipes with your friends. If you _just_ need a CMS, the [recipes-studio](https://github.com/ajax2012/recipes-studio) app will be all you will need.
+
 DEV NOTE: the mobile version of this works, but it has some bugs with the "side nav". Please ignore this for now - will be fixed in a future update.
 
 ## Dependencies
@@ -64,4 +66,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## TODOs
 
 - fix mobile side nav.
+- add print button for recipes
 - add theming if requested.
