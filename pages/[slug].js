@@ -11,7 +11,6 @@ import { GiCookingPot } from 'react-icons/gi';
 import YouTube from "react-youtube";
 import { useRecipeContext } from "../store/recipeState";
 import { UserContext } from "../store/userState";
-import { useRouter } from "next/router";
 import { Spinner } from "react-bootstrap";
 
 const currentRecipeQuery = groq`
@@ -30,14 +29,8 @@ const currentRecipeQuery = groq`
 `;
 
 export default function Recipe({data}) {
-  const router = useRouter();
   const { handleSetRecipes } = useRecipeContext();
   const [user] = useContext(UserContext);
-
-  // Redirect to /login if the user is not logged in
-  useEffect(() => {
-    !user?.issuer && router.push('/login');
-  }, [user]);
 
   if (!data?.currentRecipe?.slug) {
     return <ErrorPage statusCode={404} />
