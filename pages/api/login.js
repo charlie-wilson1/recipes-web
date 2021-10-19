@@ -1,6 +1,7 @@
-import { Magic } from '@magic-sdk/admin';
+import { Magic } from "@magic-sdk/admin";
 
 // Initiating Magic instance for server-side methods
+// eslint-disable-next-line no-undef
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 export default async function login(req, res) {

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Icon, MonochromeIcons, CallToAction } from '@magiclabs/ui';
-import { Button, Form } from 'react-bootstrap';
+import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { PropTypes } from "prop-types";
 
 const EmailForm = ({ onEmailSubmit, disabled }) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,13 +13,13 @@ const EmailForm = ({ onEmailSubmit, disabled }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <h3 className='form-header'>Login</h3>
-        <div className='input-wrapper'>
+        <h3 className="form-header">Login</h3>
+        <div className="input-wrapper">
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
-              placeholder='Enter your email'
-              type='email'
+              placeholder="Enter your email"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -28,7 +28,7 @@ const EmailForm = ({ onEmailSubmit, disabled }) => {
         <div>
           <Button
             variant="success"
-            size='sm'
+            size="sm"
             disabled={disabled}
             onClick={handleSubmit}
           >
@@ -54,6 +54,11 @@ const EmailForm = ({ onEmailSubmit, disabled }) => {
       `}</style>
     </>
   );
+};
+
+EmailForm.propTypes = {
+  onEmailSubmit: PropTypes.function.isRequired,
+  disabled: PropTypes.boolean.isRequired,
 };
 
 export default EmailForm;

@@ -1,7 +1,7 @@
-import { useEffect, useContext } from 'react';
-import Router, { useRouter } from 'next/router';
-import { magic } from '../lib/magic';
-import { UserContext } from '../store/userState';
+import { useEffect, useContext } from "react";
+import Router, { useRouter } from "next/router";
+import { magic } from "../lib/magic";
+import { UserContext } from "../store/userState";
 import { Spinner } from "react-bootstrap";
 
 const Callback = () => {
@@ -10,7 +10,7 @@ const Callback = () => {
 
   // Redirect to / if the user is not logged in
   useEffect(() => {
-    user?.issuer && router.push('/');
+    user?.issuer && router.push("/");
   }, [user]);
 
   // The redirect contains a `provider` query param if the user is logging in with a social provider
@@ -27,16 +27,18 @@ const Callback = () => {
   // `loginWithCredential()` returns a didToken for the user logging in
   const finishEmailRedirectLogin = () => {
     if (router.query.magic_credential)
-      magic.auth.loginWithCredential().then((didToken) => authenticateWithServer(didToken));
+      magic.auth
+        .loginWithCredential()
+        .then((didToken) => authenticateWithServer(didToken));
   };
 
   // Send token to server to validate
   const authenticateWithServer = async (didToken) => {
-    let res = await fetch('/api/login', {
-      method: 'POST',
+    let res = await fetch("/api/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + didToken,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + didToken,
       },
     });
 
@@ -44,7 +46,7 @@ const Callback = () => {
       // Set the UserContext to the now logged in user
       let userMetadata = await magic.user.getMetadata();
       await setUser(userMetadata);
-      Router.push('/');
+      Router.push("/");
     }
   };
 
