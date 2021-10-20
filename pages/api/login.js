@@ -6,7 +6,7 @@ const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 export default async function login(req, res) {
   try {
-    const didToken = req.headers.authorization.substr(7);
+    const didToken = magic.utils.parseAuthorizationHeader("Authorization");
     await magic.token.validate(didToken);
     res.status(200).json({ authenticated: true });
   } catch (error) {
