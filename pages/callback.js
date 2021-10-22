@@ -18,8 +18,7 @@ export default function Callback() {
       const didToken = await magic.auth.loginWithCredential(credential);
       signIn("credentials", {
         didToken: didToken,
-        callbackUrl:
-          router.query["callbackUrl"] ?? new URL(window.location.hostname).href,
+        callbackUrl: router.query["callbackUrl"],
       });
     }
   };
@@ -29,8 +28,7 @@ export default function Callback() {
 
     await signIn("credentials", {
       didToken: result.magic.idToken,
-      callbackUrl:
-        router.query["callbackUrl"] ?? new URL(window.location.hostname).href,
+      callbackUrl: router.query["callbackUrl"],
     });
   };
 
