@@ -20,16 +20,26 @@ export default function Login() {
 
   const handleLoginWithEmail = async () => {
     setDisabled(true);
+    try {
+      let redirectURI = new URL("/callback", window.location.origin).href;
+      const callbackUrl = router.query["callbackUrl"];
 
-    const didToken = await magic.auth.loginWithMagicLink({
-      email,
-      redirectURI: new URL("/callback", window.location.origin).href,
-    });
+      if (callbackUrl) {
+        redirectURI += `?callbackUrl=${callbackUrl}`;
+      }
 
-    await signIn(CredentialsProvider, {
-      didToken,
-      callbackUrl: router.query["callbackUrl"],
-    });
+      const didToken = await magic.auth.loginWithMagicLink({
+        email,
+        redirectURI,
+      });
+
+      await signIn(CredentialsProvider, {
+        didToken,
+        callbackUrl: callbackUrl ?? new URL(window.location.origin).href,
+      });
+    } catch {
+      setDisabled(false);
+    }
   };
 
   const handleLoginWithSocial = async (provider) => {
@@ -37,9 +47,16 @@ export default function Login() {
       throw new Error("magic not defined");
     }
 
+    let redirectURI = new URL("/callback", window.location.origin).href;
+    const callbackUrl = router.query["callbackUrl"];
+
+    if (callbackUrl) {
+      redirectURI += `?callbackUrl=${callbackUrl}`;
+    }
+
     await magic.oauth.loginWithRedirect({
       provider, // google, facebook, etc
-      redirectURI: new URL("/callback", window.location.origin).href,
+      redirectURI,
     });
   };
 
