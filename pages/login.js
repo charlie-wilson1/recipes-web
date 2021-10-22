@@ -12,6 +12,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const providers = ["google", "facebook"];
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const baseUrl = process.env.BASE_URL;
+  console.log(baseUrl);
 
   // Redirect to / if the user is logged in
   useEffect(() => {
@@ -21,21 +23,25 @@ export default function Login() {
   const handleLoginWithEmail = async () => {
     setDisabled(true);
     try {
-      let redirectURI = "/callback";
+      let redirectPath = "/callback";
       const callbackUrl = router.query["callbackUrl"];
 
       if (callbackUrl) {
-        redirectURI += `?callbackUrl=${callbackUrl}`;
+        redirectPath += `?callbackUrl=${callbackUrl}`;
       }
+
+      const redirectUrl = baseUrl
+        ? new URL(redirectPath, baseUrl).href
+        : new URL(redirectPath, window.location.origin).href;
 
       const didToken = await magic.auth.loginWithMagicLink({
         email,
-        redirectURI,
+        redirectURI: redirectUrl,
       });
 
       await signIn(CredentialsProvider, {
         didToken,
-        callbackUrl: callbackUrl,
+        callbackUrl: callbackUrl ? redirectUrl : null,
       });
     } catch {
       setDisabled(false);
@@ -47,16 +53,20 @@ export default function Login() {
       throw new Error("magic not defined");
     }
 
-    let redirectURI = "/callback";
+    let redirectPath = "/callback";
     const callbackUrl = router.query["callbackUrl"];
 
     if (callbackUrl) {
-      redirectURI += `?callbackUrl=${callbackUrl}`;
+      redirectPath += `?callbackUrl=${callbackUrl}`;
     }
+
+    const redirectUrl = baseUrl
+      ? new URL(redirectPath, baseUrl).href
+      : new URL(redirectPath, window.location.origin).href;
 
     await magic.oauth.loginWithRedirect({
       provider, // google, facebook, etc
-      redirectURI,
+      redirectURI: redirectUrl,
     });
   };
 

@@ -22,8 +22,7 @@ export default async function auth(req, res) {
         credentials: {
           didToken: { label: "DID Token", type: "text" },
         },
-        // eslint-disable-next-line no-unused-vars
-        async authorize({ didToken }, req) {
+        async authorize({ didToken }) {
           magic.token.validate(didToken);
           const metadata = await magic.users.getMetadataByToken(didToken);
 
