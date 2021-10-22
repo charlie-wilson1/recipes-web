@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { magic } from "../lib/magic";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/client";
 import { Button, Form } from "react-bootstrap";
-import CredentialsProvider from "next-auth/providers/credentials";
 
 export default function Login() {
   const router = useRouter();
-  const { status } = useSession();
+  const [session] = useSession();
   const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState("");
   const providers = ["google", "facebook"];
@@ -16,8 +15,8 @@ export default function Login() {
 
   // Redirect to / if the user is logged in
   useEffect(() => {
-    status === "authenticated" && router.push("/");
-  }, [status]);
+    session?.user && router.push("/");
+  }, [session]);
 
   const handleLoginWithEmail = async () => {
     setDisabled(true);
@@ -38,7 +37,7 @@ export default function Login() {
         redirectURI: redirectUrl,
       });
 
-      await signIn(CredentialsProvider, {
+      await signIn("credential", {
         didToken,
         callbackUrl: callbackUrl ? redirectUrl : null,
       });

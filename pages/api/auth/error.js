@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt";
-import { signIn } from "next-auth/react";
+import { signIn } from "next-auth/client";
 
 const secret = process.env.JWT_KEY;
 

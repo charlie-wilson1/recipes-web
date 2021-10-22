@@ -4,13 +4,13 @@ import { useState } from "react";
 import { useRecipeContext } from "../store/recipeState";
 import { urlFor } from "../lib/sanity";
 import { GrClose } from "react-icons/gr";
-import { useSession, signOut, signIn } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/client";
 import { magic } from "../lib/magic";
 
 export default function RecipeNavbar() {
   const [expanded, setExpanded] = useState(false);
   const { recipes } = useRecipeContext();
-  const { status } = useSession();
+  const [session, loading] = useSession();
 
   const handleLogout = () => {
     signOut();
@@ -38,7 +38,7 @@ export default function RecipeNavbar() {
                   <GrClose />
                 </Button>
               </div>
-              {status === "authenticated" && (
+              {session?.user && (
                 <Nav className="mr-auto d-block">
                   {(recipes ?? []).map((recipe) => (
                     <Nav.Link key={recipe.title} href={`/${recipe.slug}`}>
@@ -78,10 +78,11 @@ export default function RecipeNavbar() {
           />
           <Navbar>
             <Nav className="mr-auto">
-              {status === "authenticated" && (
+              {loading ? (
+                <></>
+              ) : session?.user ? (
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-              )}
-              {status === "unauthenticated" && (
+              ) : (
                 <Nav.Link onClick={() => signIn()}>Login</Nav.Link>
               )}
             </Nav>

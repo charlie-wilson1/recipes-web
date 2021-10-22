@@ -3,14 +3,14 @@ import "../styles/globals.css";
 import Navbar from "../components/navbar";
 import { RecipeProvider } from "../store/recipeState";
 import { PropTypes } from "prop-types";
-import { SessionProvider, signIn, useSession } from "next-auth/react";
+import { Provider, signIn, useSession } from "next-auth/client";
 import { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <RecipeProvider>
-      <SessionProvider session={session}>
+      <Provider session={session}>
         <Navbar />
         {Component.auth ? (
           <Auth>
@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         ) : (
           <Component {...pageProps} />
         )}
-      </SessionProvider>
+      </Provider>
     </RecipeProvider>
   );
 }
@@ -31,17 +31,17 @@ MyApp.propTypes = {
 
 // eslint-disable-next-line react/prop-types
 function Auth({ children }) {
-  const { data: session, status } = useSession();
+  const [session, loading] = useSession();
   const isUser = !!session?.user;
 
   useEffect(() => {
-    if (status === "loading") {
+    if (loading) {
       return;
     }
     if (!isUser) {
       signIn();
     }
-  }, [isUser, status]);
+  }, [isUser, loading]);
 
   if (isUser) {
     return children;
