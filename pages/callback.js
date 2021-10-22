@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 
 export default function Callback() {
   const router = useRouter();
-  const uri = process.env.LOCAL_URL;
+  const baseUrl = process.env.BASE_URL;
 
   useEffect(() => {
     router.query.provider ? finishSocialLogin() : finishEmailRedirectLogin();
@@ -17,22 +17,30 @@ export default function Callback() {
 
     if (credential) {
       const didToken = await magic.auth.loginWithCredential(credential);
-      const callbackUrl = router.query["callbackUrl"];
+      const redirectPath = router.query["callbackUrl"];
+
+      const redirectUrl = baseUrl
+        ? new URL(redirectPath, baseUrl).href
+        : new URL(redirectPath, window.location.origin).href;
 
       signIn("credentials", {
         didToken: didToken,
-        callbackUrl: callbackUrl ? new URL(callbackUrl, uri).href : null,
+        callbackUrl: redirectPath ? redirectUrl : null,
       });
     }
   };
 
   const finishSocialLogin = async () => {
     const result = await magic.oauth.getRedirectResult();
-    const callbackUrl = router.query["callbackUrl"];
+    const redirectPath = router.query["callbackUrl"];
+
+    const redirectUrl = baseUrl
+      ? new URL(redirectPath, baseUrl).href
+      : new URL(redirectPath, window.location.origin).href;
 
     await signIn("credentials", {
       didToken: result.magic.idToken,
-      callbackUrl: callbackUrl ? new URL(callbackUrl, uri).href : null,
+      callbackUrl: redirectPath ? redirectUrl : null,
     });
   };
 
