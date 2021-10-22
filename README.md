@@ -2,7 +2,7 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-This project combined with the [recipes-studio](https://github.com/ajax2012/recipes-studio) app should give you an almost free method of hosting and managing your favorite recipes. Amount of users for CMS: 3. I _highly_ recommend adding whitelisted emails to your Magic link application. This will make it so only people you give permission to have read-only access to your recipes. __I do not accept fault if you add copyrighted material and host it on your own project; I do not have control over your personal CMS.__
+This project combined with the [recipes-studio](https://github.com/ajax2012/recipes-studio) app should give you an almost free method of hosting and managing your favorite recipes. Amount of users for CMS: 3. I _highly_ recommend adding whitelisted emails to your Magic link application. This will make it so only people you give permission to have read-only access to your recipes. **I do not accept fault if you add copyrighted material and host it on your own project; I do not have control over your personal CMS.**
 
 Please note that this project is not necssary if you don't require an easier viewing experience or don't wish to share your recipes with your friends. If you _just_ need a CMS, the [recipes-studio](https://github.com/ajax2012/recipes-studio) app will be all you will need.
 
@@ -24,9 +24,19 @@ NEXT_PUBLIC_SANITY_PROJECT_ID='...'
 SANITY_API_TOKEN='...'
 NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY=pk_live_...
 MAGIC_SECRET_KEY=sk_live_...
+JWT_KEY=...
+JWT_SIGNING_KEY='...'
 ```
 
-Then, run the development server:
+To create the JWT key, generate a 32 character string in a random string/password generator. To create the JWT_SIGNING_KEY, install [jose](https://www.npmjs.com/package/jose) globally `npm i -g jose` and run the following:
+
+```bash
+jose newkey -s 256 -t oct -a HS512
+```
+
+Copy and paste the results into the JWT_SIGNING_KEY variable (note, when running locally from an .env file, you should put this between single quotes. When adding this to a web host, such as netlify, you should exclude the single quotes. The same goes for everything you see in the config example above that is between single quotes.).
+
+Run the development server:
 
 ```bash
 npm run dev
