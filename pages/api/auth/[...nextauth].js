@@ -15,6 +15,7 @@ export default async function auth(req, res) {
     },
     pages: {
       signIn: "/login",
+      error: "/auth/error",
     },
     providers: [
       CredentialsProvider({
