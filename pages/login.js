@@ -13,7 +13,6 @@ export default function Login() {
   const providers = ["google", "facebook"];
   const [isRedirecting, setIsRedirecting] = useState(false);
   const baseUrl = process.env.BASE_URL;
-  console.log(baseUrl);
 
   // Redirect to / if the user is logged in
   useEffect(() => {
