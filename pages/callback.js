@@ -2,11 +2,17 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { magic } from "../lib/magic";
 import { Spinner } from "react-bootstrap";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Callback() {
   const router = useRouter();
+  const { status } = useSession();
   const baseUrl = process.env.BASE_URL;
+
+  // Redirect to / if the user is logged in
+  useEffect(() => {
+    status === "authenticated" && router.push("/");
+  }, [status]);
 
   useEffect(() => {
     router.query.provider ? finishSocialLogin() : finishEmailRedirectLogin();
