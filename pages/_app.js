@@ -2,38 +2,25 @@ import "bootstrap/dist/css/bootstrap.css";
 import "../styles/globals.css";
 import Navbar from "../components/navbar";
 import { RecipeProvider } from "../store/recipeState";
-import { UserContext } from "../store/userState";
-import { useEffect, useState } from "react";
-import { magic } from "../lib/magic";
-import Router from "next/router";
 import { PropTypes } from "prop-types";
+import { SessionProvider, signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 
-function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState();
-
-  /**
-   * If isLoggedIn is true, set the UserContext with user data
-   * Otherwise, redirect to /login and set UserContext to { user: null }
-   */
-  useEffect(() => {
-    setUser({ loading: true });
-    magic.user.isLoggedIn().then((isLoggedIn) => {
-      if (isLoggedIn) {
-        magic.user.getMetadata().then((userData) => setUser(userData));
-      } else {
-        Router.push("/login");
-        setUser({ user: null });
-      }
-    });
-  }, []);
-
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <UserContext.Provider value={[user, setUser]}>
-      <RecipeProvider>
+    <RecipeProvider>
+      <SessionProvider session={session}>
         <Navbar />
-        <Component {...pageProps} />
-      </RecipeProvider>
-    </UserContext.Provider>
+        {Component.auth ? (
+          <Auth>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
+          <Component {...pageProps} />
+        )}
+      </SessionProvider>
+    </RecipeProvider>
   );
 }
 
@@ -41,5 +28,30 @@ MyApp.propTypes = {
   Component: PropTypes.object,
   pageProps: PropTypes.object,
 };
+
+// eslint-disable-next-line react/prop-types
+function Auth({ children }) {
+  const { data: session, status } = useSession();
+  const isUser = !!session?.user;
+
+  useEffect(() => {
+    if (status === "loading") {
+      return;
+    }
+    if (!isUser) {
+      signIn();
+    }
+  }, [isUser, status]);
+
+  if (isUser) {
+    return children;
+  }
+
+  return (
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  );
+}
 
 export default MyApp;

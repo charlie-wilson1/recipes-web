@@ -64,8 +64,10 @@ export default function Home({ data }) {
 }
 
 Home.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
+
+Home.auth = true;
 
 export async function getStaticProps() {
   const data = await getClient(true).fetch(
