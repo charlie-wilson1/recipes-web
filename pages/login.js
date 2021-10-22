@@ -21,7 +21,7 @@ export default function Login() {
   const handleLoginWithEmail = async () => {
     setDisabled(true);
     try {
-      let redirectURI = new URL("/callback", window.location.origin).href;
+      let redirectURI = new URL("/callback", window.location.hostname).href;
       const callbackUrl = router.query["callbackUrl"];
 
       if (callbackUrl) {
@@ -35,7 +35,7 @@ export default function Login() {
 
       await signIn(CredentialsProvider, {
         didToken,
-        callbackUrl: callbackUrl ?? new URL(window.location.origin).href,
+        callbackUrl: callbackUrl ?? new URL(window.location.hostname).href,
       });
     } catch {
       setDisabled(false);
@@ -47,7 +47,7 @@ export default function Login() {
       throw new Error("magic not defined");
     }
 
-    let redirectURI = new URL("/callback", window.location.origin).href;
+    let redirectURI = new URL("/callback", window.location.hostname).href;
     const callbackUrl = router.query["callbackUrl"];
 
     if (callbackUrl) {

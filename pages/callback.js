@@ -19,7 +19,7 @@ export default function Callback() {
       signIn("credentials", {
         didToken: didToken,
         callbackUrl:
-          router.query["callbackUrl"] ?? new URL(window.location.origin).href,
+          router.query["callbackUrl"] ?? new URL(window.location.hostname).href,
       });
     }
   };
@@ -30,7 +30,7 @@ export default function Callback() {
     await signIn("credentials", {
       didToken: result.magic.idToken,
       callbackUrl:
-        router.query["callbackUrl"] ?? new URL(window.location.origin).href,
+        router.query["callbackUrl"] ?? new URL(window.location.hostname).href,
     });
   };
 
