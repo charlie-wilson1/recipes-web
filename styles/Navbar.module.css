@@ -33,7 +33,9 @@ nav.sidebar {
   -o-transition: margin 400ms ease-out;
   transition: margin 400ms ease-out;
   min-height: 100vh;
+  min-width: 30%;
   overflow-y: scroll;
+  position: absolute;
 }
 
 /* .....NavBar: Fully showing nav bar..... */
@@ -42,6 +44,7 @@ nav.sidebar {
   nav.sidebar {
     margin-left: 0px;
     float: left;
+    min-width: 50%;
   }
 }
 
@@ -73,6 +76,7 @@ nav.sidebar {
     margin-left: 0px;
     width: 25vw;
     text-overflow: ellipsis;
+    min-width: 50%;
   }
 }
 
