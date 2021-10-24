@@ -33,23 +33,31 @@ nav.sidebar {
   -o-transition: margin 400ms ease-out;
   transition: margin 400ms ease-out;
   min-height: 100vh;
-  min-width: 30%;
   overflow-y: scroll;
   position: absolute;
+  margin-left: -100vw;
+  z-index: 8000;
 }
 
-/* .....NavBar: Fully showing nav bar..... */
-@media (min-width: 1330px) {
-  /*Show all nav*/
-  nav.sidebar {
-    margin-left: 0px;
-    float: left;
-    min-width: 50%;
+/*give sidebar 100% width;*/
+nav.sidebar li {
+  width: 100%;
+}
+
+@media (min-width: 1000px) {
+  nav.sidebar.expanded {
+    min-width: 450px !important;
+  }
+}
+
+@media (min-width: 900px) {
+  nav.sidebar.expanded {
+    min-width: 40%;
   }
 }
 
 /*small/medium side display*/
-@media (min-width: 768px) {
+@media (min-width: 786px) {
   /*allows nav box to use 100% width*/
   nav.sidebar :global(.navbar-collapse),
   nav.sidebar :global(.container-fluid) {
@@ -59,24 +67,17 @@ nav.sidebar {
   /*gives sidebar width/height*/
   nav.sidebar {
     height: 100%;
-    margin-left: -40vw;
     float: left;
     z-index: 8000;
     margin-bottom: 0px;
     overflow: hidden;
   }
 
-  /*give sidebar 100% width;*/
-  nav.sidebar li {
-    width: 100%;
-  }
-
   /* Move nav to full on mouse over*/
   nav.sidebar.expanded {
     margin-left: 0px;
-    width: 25vw;
     text-overflow: ellipsis;
-    min-width: 50%;
+    min-width: 40%;
   }
 }
 
@@ -89,15 +90,7 @@ nav.sidebar {
 
   /*gives sidebar width/height*/
   nav.sidebar {
-    margin-left: -100vw;
-    float: left;
-    z-index: 8000;
     margin-bottom: 0px;
-  }
-
-  /*give sidebar 100% width;*/
-  nav.sidebar li {
-    width: 100%;
   }
 
   /* Move nav to full on mouse over*/
@@ -105,5 +98,6 @@ nav.sidebar {
     float: none;
     margin-left: 0px;
     text-overflow: ellipsis;
+    min-width: 50%;
   }
 }
