@@ -17,7 +17,7 @@
 
 .subtitle {
   font-size: 0.8em;
-  color: lightslategray; 
+  color: lightslategray;
 }
 
 .close {
@@ -36,10 +36,8 @@ nav.sidebar {
   overflow-y: scroll;
 }
 
-
 /* .....NavBar: Fully showing nav bar..... */
-@media (min-width : 1330px) {
-
+@media (min-width: 1330px) {
   /*Show all nav*/
   nav.sidebar {
     margin-left: 0px;
@@ -47,10 +45,8 @@ nav.sidebar {
   }
 }
 
-
 /*small/medium side display*/
-@media (min-width : 768px) {
-
+@media (min-width: 768px) {
   /*allows nav box to use 100% width*/
   nav.sidebar :global(.navbar-collapse),
   nav.sidebar :global(.container-fluid) {
@@ -60,7 +56,7 @@ nav.sidebar {
   /*gives sidebar width/height*/
   nav.sidebar {
     height: 100%;
-    margin-left: -25vw;
+    margin-left: -40vw;
     float: left;
     z-index: 8000;
     margin-bottom: 0px;
@@ -80,7 +76,7 @@ nav.sidebar {
   }
 }
 
-@media (max-width : 786px) {
+@media (max-width: 786px) {
   /*allows nav box to use 100% width*/
   nav.sidebar :global(.navbar-collapse),
   nav.sidebar :global(.container-fluid) {

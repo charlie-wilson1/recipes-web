@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "../styles/Login.module.css";
 import { useRouter } from "next/router";
 import { magic } from "../lib/magic";
 import { signIn, useSession } from "next-auth/client";
@@ -69,10 +70,10 @@ export default function Login() {
   };
 
   return (
-    <div className="login">
+    <div className={styles.login}>
       <form>
-        <h3 className="form-header">Login</h3>
-        <div className="input-wrapper">
+        <h3 className={styles.formHeader}>Login</h3>
+        <div className={styles.inputWrapper}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -80,6 +81,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className={styles.input}
             />
           </Form.Group>
         </div>
@@ -89,18 +91,19 @@ export default function Login() {
             size="sm"
             disabled={disabled}
             onClick={handleLoginWithEmail}
+            className={styles.magicBtn}
           >
             Send Magic Link
           </Button>
         </div>
       </form>
-      <div className="or-login-with">Or login with</div>
+      <div className={styles.orLoginWith}>Or login with</div>
       {providers.map((provider) => {
         return (
           <div key={provider}>
             <button
               type="submit"
-              className="social-btn"
+              className={styles.socialBtn}
               onClick={() => {
                 setIsRedirecting(true);
                 handleLoginWithSocial(provider);
@@ -114,55 +117,15 @@ export default function Login() {
           </div>
         );
       })}
-      {isRedirecting && <div className="redirecting">Redirecting...</div>}
+      {isRedirecting && (
+        <div className={styles.redirecting}>Redirecting...</div>
+      )}
       <style jsx>{`
-        .login {
-          max-width: 20rem;
-          margin: 40px auto 0;
-          padding: 1rem;
-          border: 1px solid #dfe1e5;
-          border-radius: 4px;
-          text-align: center;
-          box-shadow: 0px 0px 6px 6px #f7f7f7;
-          box-sizing: border-box;
-        }
         form,
         label {
           display: flex;
           flex-flow: column;
           text-align: center;
-        }
-        .form-header {
-          font-size: 22px;
-          margin: 25px 0;
-        }
-        .input-wrapper {
-          width: 80%;
-          margin: 0 auto 20px;
-        }
-        .or-login-with {
-          margin: 25px 0;
-          font-size: 12px;
-          text-align: center;
-          color: gray;
-        }
-        .social-btn {
-          cursor: pointer;
-          border-radius: 50px;
-          margin-bottom: 20px;
-          border: 1px solid #8a8a8a;
-          padding: 9px 24px 9px 35px;
-          width: 80%;
-
-          background-color: #fff;
-          background-size: 20px;
-          background-repeat: no-repeat;
-          background-position: 23% 50%;
-        }
-        .redirecting {
-          color: gray;
-          font-size: 12px;
-          margin-bottom: 5px;
         }
       `}</style>
     </div>

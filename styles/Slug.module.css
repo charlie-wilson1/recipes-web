@@ -1,6 +1,6 @@
 .subtitle {
   font-size: 0.8em;
-  color: lightslategray; 
+  color: lightslategray;
 }
 
 h3.header {
@@ -22,6 +22,12 @@ h3.header {
   flex-direction: row;
   columns: 2;
   flex-wrap: wrap;
+}
+
+@media (max-width: 1000px) {
+  .printButton {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {

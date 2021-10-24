@@ -47,13 +47,31 @@
   overflow: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
+  .image {
+    object-fit: cover;
+  }
+
+  .splashArrow {
+    left: 45%;
+  }
+
+  .splash {
+    height: 91.5vh;
+  }
+}
+
+@media (max-width: 660px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
 
-  .image {
-    object-fit: cover;
+  .splashArrow {
+    left: 42%;
+  }
+
+  .splash {
+    height: 87vh;
   }
 }

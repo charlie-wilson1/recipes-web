@@ -282,7 +282,7 @@ export default function Recipe({ data }) {
           type="button"
           variant="outline-success"
           onClick={printPage}
-          className="mx-auto"
+          className={`${styles.printButton} mx-auto`}
         >
           Print
         </Button>
