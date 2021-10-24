@@ -71,13 +71,13 @@ export default function RecipeNavbar() {
         </Navbar>
       </div>
       <Navbar bg="light" variant="light">
-        <Container>
+        <Container className={expanded ? "justify-content-end" : ""}>
           <Navbar.Toggle
             className={expanded ? "d-none" : "d-flex"}
             onClick={() => setExpanded(true)}
           />
           <Navbar>
-            <Nav className="mr-auto">
+            <Nav>
               {loading ? (
                 <></>
               ) : session?.user ? (
