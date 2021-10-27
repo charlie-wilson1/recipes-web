@@ -71,7 +71,7 @@ export default function Recipe({ data }) {
 
   const ingredientListItem = (ingredient) => {
     return (
-      <Col md="6">
+      <Col md="6" key={ingredient.title}>
         <ListGroup.Item as="li" key={ingredient.title}>
           <div className="d-flex justify-content-between">
             {ingredient.title}
@@ -320,12 +320,12 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const paths = await getClient(true).fetch(
+  const recipeSlugs = await getClient(true).fetch(
     groq`*[_type == "recipe" && defined(slug.current)][].slug.current`
   );
 
   return {
-    paths: paths.map((slug) => ({ params: { slug } })),
-    fallback: true,
+    paths: recipeSlugs.map((slug) => ({ params: { slug } })),
+    fallback: false,
   };
 }
