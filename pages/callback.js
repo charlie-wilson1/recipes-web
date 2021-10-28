@@ -1,58 +1,39 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { magic } from "../lib/magic";
+import { signIn } from "next-auth/client";
+import { useRouter } from "next/dist/client/router";
 import { Spinner } from "react-bootstrap";
-import { signIn, useSession } from "next-auth/client";
 
 export default function Callback() {
   const router = useRouter();
-  const [session] = useSession();
-  const baseUrl = process.env.BASE_URL;
-
-  // Redirect to / if the user is logged in
-  useEffect(() => {
-    session?.user && router.push("/");
-  }, [session]);
+  const callbackUrl = router.query["callbackUrl"];
 
   useEffect(() => {
-    router.query.provider ? finishSocialLogin() : finishEmailRedirectLogin();
-  }, [router.query]);
-
-  const finishEmailRedirectLogin = async () => {
-    const credential = router.query.magic_credential;
-
-    if (credential) {
-      const didToken = await magic.auth.loginWithCredential(credential);
-      const redirectPath = router.query["callbackUrl"];
-
-      const redirectUrl = baseUrl
-        ? new URL(redirectPath, baseUrl).href
-        : new URL(redirectPath, window.location.origin).href;
-
-      signIn("credentials", {
-        didToken: didToken,
-        callbackUrl: redirectPath ? redirectUrl : null,
+    if (typeof window !== "undefined") {
+      window.addEventListener("@magic/ready", (event) => {
+        const { idToken } = event.detail;
+        finishLogin(idToken);
       });
     }
-  };
+  }, []);
 
-  const finishSocialLogin = async () => {
-    const result = await magic.oauth.getRedirectResult();
-    const redirectPath = router.query["callbackUrl"];
-
-    const redirectUrl = baseUrl
-      ? new URL(redirectPath, baseUrl).href
-      : new URL(redirectPath, window.location.origin).href;
-
+  const finishLogin = async (didToken) => {
     await signIn("credentials", {
-      didToken: result.magic.idToken,
-      callbackUrl: redirectPath ? redirectUrl : null,
+      didToken,
+      callbackUrl: callbackUrl ?? null,
     });
   };
 
   return (
-    <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>
+    <>
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+      <script
+        src="https://auth.magic.link/pnp/callback"
+        data-magic-publishable-api-key={
+          process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY
+        }
+      ></script>
+    </>
   );
 }

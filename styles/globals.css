@@ -26,6 +26,10 @@ a {
   body {
     font-size: 16px;
   }
+
+  .magic-iframe {
+    padding-top: 5% !important;
+  }
 }
 
 .list-group-item {
@@ -43,4 +47,8 @@ a {
   left: 50%;
   margin-top: -50px;
   margin-left: -50px;
+}
+
+.magic-iframe {
+  padding-top: 10rem;
 }

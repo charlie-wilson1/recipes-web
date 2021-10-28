@@ -12,12 +12,9 @@ export default function RecipeNavbar() {
   const { recipes } = useRecipeContext();
   const [session, loading] = useSession();
 
-  const handleLogout = () => {
-    signOut();
-    try {
-      magic.user.logout();
-      // eslint-disable-next-line no-empty
-    } catch {}
+  const handleLogout = async () => {
+    await magic.user.logout();
+    await signOut();
   };
 
   return (
