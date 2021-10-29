@@ -27,77 +27,28 @@
   margin-top: 20px;
 }
 
-nav.sidebar {
-  -webkit-transition: margin 400ms ease-out;
-  -moz-transition: margin 400ms ease-out;
-  -o-transition: margin 400ms ease-out;
-  transition: margin 400ms ease-out;
-  min-height: 100vh;
-  overflow-y: scroll;
+.sidebar {
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   position: absolute;
-  margin-left: -100vw;
   z-index: 8000;
+  min-width: 30%;
+  max-width: 30%;
+  white-space: nowrap;
 }
 
-/*give sidebar 100% width;*/
-nav.sidebar li {
-  width: 100%;
-}
-
-@media (min-width: 1000px) {
-  nav.sidebar.expanded {
-    min-width: 450px !important;
-  }
-}
-
-@media (min-width: 900px) {
-  nav.sidebar.expanded {
+@media (max-width: 1030px) {
+  .sidebar {
     min-width: 40%;
-  }
-}
-
-/*small/medium side display*/
-@media (min-width: 786px) {
-  /*allows nav box to use 100% width*/
-  nav.sidebar :global(.navbar-collapse),
-  nav.sidebar :global(.container-fluid) {
-    padding: 0;
-  }
-
-  /*gives sidebar width/height*/
-  nav.sidebar {
-    height: 100%;
-    float: left;
-    z-index: 8000;
-    margin-bottom: 0px;
-    overflow: hidden;
-  }
-
-  /* Move nav to full on mouse over*/
-  nav.sidebar.expanded {
-    margin-left: 0px;
-    text-overflow: ellipsis;
-    min-width: 40%;
+    max-width: 40%;
   }
 }
 
 @media (max-width: 786px) {
-  /*allows nav box to use 100% width*/
-  nav.sidebar :global(.navbar-collapse),
-  nav.sidebar :global(.container-fluid) {
-    padding: 0;
-  }
-
-  /*gives sidebar width/height*/
-  nav.sidebar {
-    margin-bottom: 0px;
-  }
-
-  /* Move nav to full on mouse over*/
-  nav.sidebar.expanded {
-    float: none;
-    margin-left: 0px;
-    text-overflow: ellipsis;
+  .sidebar {
     min-width: 50%;
+    max-width: 99%;
   }
 }
