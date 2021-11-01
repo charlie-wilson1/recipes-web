@@ -62,9 +62,7 @@ export default function Recipe({ data }) {
         <ListGroup.Item as="li" key={ingredient.title}>
           <div className="d-flex justify-content-between">
             {ingredient.title}
-            <span>
-              {ingredient.quantity} {ingredient.unit}
-            </span>
+            <span>{ingredient.quantity}</span>
           </div>
           <div className={styles.subtitle}>{ingredient.notes}</div>
         </ListGroup.Item>
