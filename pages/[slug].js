@@ -140,7 +140,7 @@ export default function Recipe({ data }) {
         <Row>
           <h1>{title}</h1>
         </Row>
-        {windowWidth && (
+        {windowWidth && image && (
           <Row>
             <Col>
               <Image
