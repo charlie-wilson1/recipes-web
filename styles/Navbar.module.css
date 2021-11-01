@@ -1,18 +1,9 @@
-.wrapper {
-  display: flex;
-  width: 100%;
-  align-items: stretch;
-}
-
-.sideBarMenuContainer {
-  position: fixed;
-  height: 100%;
-}
-
 .title {
   font-size: 1.2em;
   font-weight: 400;
   color: black;
+  flex: 1;
+  text-overflow: ellipsis;
 }
 
 .subtitle {
@@ -20,35 +11,10 @@
   color: lightslategray;
 }
 
-.close {
-  display: flex;
-  width: 100%;
-  justify-content: right;
-  margin-top: 20px;
-}
-
 .sidebar {
   min-height: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
   position: absolute;
   z-index: 8000;
-  min-width: 30%;
-  max-width: 30%;
   white-space: nowrap;
-}
-
-@media (max-width: 1030px) {
-  .sidebar {
-    min-width: 40%;
-    max-width: 40%;
-  }
-}
-
-@media (max-width: 786px) {
-  .sidebar {
-    min-width: 50%;
-    max-width: 99%;
-  }
 }
