@@ -2,19 +2,19 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useRecipeContext } from "../store/recipeState";
-import { getClient } from "../lib/sanity.server";
-import { groq } from "next-sanity";
+import { sanityClient } from "../lib/sanity.server";
 import styles from "../styles/Home.module.css";
 import { Container, Button } from "react-bootstrap";
 import { BsChevronBarDown } from "react-icons/bs";
 import { PropTypes } from "prop-types";
+import { allRecipesQuery } from "../lib/queries";
 
-export default function Home({ data }) {
+export default function Home({ allRecipes }) {
   const { handleSetRecipes } = useRecipeContext();
 
   useEffect(() => {
-    handleSetRecipes(data);
-  }, [handleSetRecipes]);
+    handleSetRecipes(allRecipes);
+  }, [allRecipes]);
 
   const scrollToBottom = () => {
     if (typeof window !== "undefined") {
@@ -64,31 +64,17 @@ export default function Home({ data }) {
 }
 
 Home.propTypes = {
-  data: PropTypes.array.isRequired,
+  allRecipes: PropTypes.array.isRequired,
 };
 
 Home.auth = true;
 
 export async function getStaticProps() {
-  const data = await getClient(true).fetch(
-    groq`*[_type == "recipe" && defined(slug.current)][] {
-      title,
-      image,
-      cookTime,
-      prepTime,
-      'slug': slug.current,
-    }`
-  );
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
+  const allRecipes = await sanityClient.fetch(allRecipesQuery);
 
   return {
     props: {
-      data,
+      allRecipes,
     },
   };
 }

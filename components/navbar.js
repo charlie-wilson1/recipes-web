@@ -81,14 +81,16 @@ export default function RecipeNavbar() {
                           <Nav.Link key={recipe.title} href={`/${recipe.slug}`}>
                             <div className="d-flex">
                               <div className="d-inline-block me-3">
-                                <Image
-                                  alt={recipe.title}
-                                  src={urlFor(recipe.image)
-                                    .width(60)
-                                    .height(60)
-                                    .auto("format")
-                                    .url()}
-                                />
+                                {recipe.image && (
+                                  <Image
+                                    alt={recipe.title}
+                                    src={urlFor(recipe.image)
+                                      .width(60)
+                                      .height(60)
+                                      .auto("format")
+                                      .url()}
+                                  />
+                                )}
                               </div>
                               <div>
                                 <div className="d-block">

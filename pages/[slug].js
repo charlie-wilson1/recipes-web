@@ -1,8 +1,7 @@
 import styles from "../styles/Slug.module.css";
 import ErrorPage from "next/error";
-import { groq } from "next-sanity";
-import { usePreviewSubscription, urlFor, PortableText } from "../lib/sanity";
-import { getClient } from "../lib/sanity.server";
+import { urlFor, PortableText } from "../lib/sanity";
+import { getClient, sanityClient } from "../lib/sanity.server";
 import {
   Accordion,
   Button,
@@ -22,21 +21,7 @@ import { useRecipeContext } from "../store/recipeState";
 import { PropTypes } from "prop-types";
 import { jsPDF } from "jspdf";
 import { toPng } from "html-to-image";
-
-const currentRecipeQuery = groq`
-  *[_type == "recipe" && slug.current == $slug][0] {
-    _id,
-    title,
-    image,
-    notes,
-    cookTime,
-    prepTime,
-    youTubeUrls,
-    ingredients,
-    instructions,
-    "slug": slug.current
-  }
-`;
+import { recipeQuery, recipeSlugsQuery } from "../lib/queries";
 
 export default function Recipe({ data }) {
   const { handleSetRecipes } = useRecipeContext();
@@ -46,9 +31,11 @@ export default function Recipe({ data }) {
     return <ErrorPage statusCode={404} />;
   }
 
+  const { currentRecipe, allRecipes } = data;
+
   useEffect(() => {
-    handleSetRecipes(data.allRecipes);
-  }, [handleSetRecipes]);
+    handleSetRecipes(allRecipes);
+  }, [allRecipes]);
 
   // setup to get/set width of window for image and video container
   const [windowWidth, setWindowWidth] = useState(0);
@@ -112,12 +99,6 @@ export default function Recipe({ data }) {
       </ListGroup.Item>
     );
   };
-
-  const { data: currentRecipe } = usePreviewSubscription(currentRecipeQuery, {
-    params: { slug: data.currentRecipe?.slug },
-    initialData: data.currentRecipe,
-    enabled: data.currentRecipe?.slug,
-  });
 
   const {
     title,
@@ -297,20 +278,16 @@ Recipe.propTypes = {
 
 Recipe.auth = true;
 
-export async function getStaticProps({ params }) {
-  const currentRecipe = await getClient(true).fetch(currentRecipeQuery, {
-    slug: params.slug,
-  });
-
-  const allRecipes = await getClient(true).fetch(
-    groq`*[_type == "recipe" && defined(slug.current)][] {
-      title,
-      image,
-      cookTime,
-      prepTime,
-      'slug': slug.current,
-    }`
+export async function getStaticProps({ params, preview = false }) {
+  const { currentRecipe, allRecipes } = await getClient(preview).fetch(
+    recipeQuery,
+    {
+      slug: params.slug,
+    }
   );
+
+  console.log("currentRecipe", currentRecipe);
+  console.log("allRecipes", allRecipes);
 
   return {
     props: {
@@ -321,10 +298,8 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const recipeSlugs = await getClient(true).fetch(
-    groq`*[_type == "recipe" && defined(slug.current)][].slug.current`
-  );
-
+  const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
+  console.log("slugs", recipeSlugs);
   return {
     paths: recipeSlugs.map((slug) => ({ params: { slug } })),
     fallback: false,
