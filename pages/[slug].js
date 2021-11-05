@@ -284,9 +284,6 @@ export async function getStaticProps({ params, preview = false }) {
     }
   );
 
-  console.log("currentRecipe", currentRecipe);
-  console.log("allRecipes", allRecipes);
-
   return {
     props: {
       data: { currentRecipe, allRecipes },
@@ -297,7 +294,6 @@ export async function getStaticProps({ params, preview = false }) {
 
 export async function getStaticPaths() {
   const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
-  console.log("slugs", recipeSlugs);
   return {
     paths: recipeSlugs.map((slug) => ({ params: { slug } })),
     fallback: false,

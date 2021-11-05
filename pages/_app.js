@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 }
 
 MyApp.propTypes = {
-  Component: PropTypes.object,
+  Component: PropTypes.func,
   pageProps: PropTypes.object,
 };
 

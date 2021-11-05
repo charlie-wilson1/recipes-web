@@ -1,7 +1,19 @@
 import { getSession } from "next-auth/client";
-import React from "react";
+import { useRouter } from "next/dist/client/router";
+import React, { useEffect } from "react";
 
 export default function Login() {
+  const { query } = useRouter();
+
+  useEffect(() => {
+    if (query) {
+      fetch("/api/auth/callback", {
+        method: "POST",
+        body: JSON.stringify({ callbackUrl: query.callbackUrl }),
+      });
+    }
+  }, [query]);
+
   return (
     <>
       <script
