@@ -1,24 +1,24 @@
 import { useEffect } from "react";
 import { signIn } from "next-auth/client";
 import { Spinner } from "react-bootstrap";
-import useSWR from "swr";
 
 export default function Callback() {
-  const { data } = useSWR("/api/auth/callback", fetcher);
-
   useEffect(() => {
-    if (typeof window !== "undefined" && data?.callbackUrl) {
+    if (typeof window !== "undefined") {
       window.addEventListener("@magic/ready", (event) => {
         const { idToken } = event.detail;
         finishLogin(idToken);
       });
     }
-  }, [data]);
+  }, []);
 
   const finishLogin = async (didToken) => {
+    const response = await fetch("/api/auth/callback");
+    const data = await response.json();
+
     await signIn("credentials", {
       didToken,
-      callbackUrl: data.callbackUrl ?? null,
+      callbackUrl: data?.callbackUrl ?? null,
     });
   };
 
@@ -36,13 +36,3 @@ export default function Callback() {
     </>
   );
 }
-
-const fetcher = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
-
-  if (res.status !== 200) {
-    throw new Error(data.message);
-  }
-  return data;
-};
