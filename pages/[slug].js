@@ -22,6 +22,7 @@ import { PropTypes } from "prop-types";
 import { jsPDF } from "jspdf";
 import { toPng } from "html-to-image";
 import { recipeQuery, recipeSlugsQuery } from "../lib/queries";
+import DisplayTime from "../components/display-time";
 
 export default function Recipe({ data }) {
   const { handleSetRecipes } = useRecipeContext();
@@ -174,7 +175,10 @@ export default function Recipe({ data }) {
                       <CgBowl style={iconStyle} />
                     </Row>
                     <Row className="d-flex justify-content-center">
-                      Prep: {prepTime}
+                      Prep:{" "}
+                      <div className="d-flex justify-content-center">
+                        {DisplayTime(prepTime)}
+                      </div>
                     </Row>
                   </Col>
                   <Col md={4}>
@@ -182,7 +186,10 @@ export default function Recipe({ data }) {
                       <GiCookingPot style={iconStyle} />
                     </Row>
                     <Row className="d-flex justify-content-center">
-                      Cook: {cookTime}
+                      Cook:{" "}
+                      <div className="d-flex justify-content-center">
+                        {DisplayTime(cookTime)}
+                      </div>
                     </Row>
                   </Col>
                   <Col md={4}>
@@ -190,7 +197,10 @@ export default function Recipe({ data }) {
                       <IoMdStopwatch style={iconStyle} />
                     </Row>
                     <Row className="d-flex justify-content-center">
-                      Total: {prepTime + cookTime}
+                      Total:{" "}
+                      <div className="d-flex justify-content-center">
+                        {DisplayTime(prepTime + cookTime)}
+                      </div>
                     </Row>
                   </Col>
                 </Row>

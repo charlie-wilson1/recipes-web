@@ -15,6 +15,7 @@ import { GrClose } from "react-icons/gr";
 import { useSession, signOut, signIn } from "next-auth/client";
 import { magic } from "../lib/magic";
 import { motion, AnimatePresence } from "framer-motion";
+import DisplayTime from "./display-time";
 
 export default function RecipeNavbar() {
   const { recipes } = useRecipeContext();
@@ -22,11 +23,6 @@ export default function RecipeNavbar() {
   const [expanded, setExpanded] = useState(false);
   const [displayedRecipes, setDisplayedRecipes] = useState({});
   const [search, setSearch] = useState("");
-
-  const handleLogout = async () => {
-    await magic.user.logout();
-    await signOut();
-  };
 
   useEffect(() => {
     setDisplayedRecipes(recipes);
@@ -38,6 +34,11 @@ export default function RecipeNavbar() {
     );
     setDisplayedRecipes(search ? filteredRecipes : recipes);
   }, [search]);
+
+  const handleLogout = async () => {
+    await magic.user.logout();
+    await signOut();
+  };
 
   const slideOut = {
     hidden: {
@@ -135,7 +136,9 @@ export default function RecipeNavbar() {
                                   </div>
                                   <div className={styles.subtitle}>
                                     Time to make:{" "}
-                                    {recipe.cookTime + recipe.prepTime}
+                                    {DisplayTime(
+                                      recipe.cookTime + recipe.prepTime
+                                    )}
                                   </div>
                                 </div>
                               </div>

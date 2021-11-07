@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 export default function Login() {
   const { query } = useRouter();
