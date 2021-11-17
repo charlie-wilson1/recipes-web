@@ -306,6 +306,6 @@ export async function getStaticPaths() {
   const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
   return {
     paths: recipeSlugs.map((slug) => ({ params: { slug } })),
-    fallback: false,
+    fallback: true,
   };
 }
