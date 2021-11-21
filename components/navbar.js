@@ -139,6 +139,9 @@ export default function RecipeNavbar() {
                                     {DisplayTime(
                                       recipe.cookTime + recipe.prepTime
                                     )}
+                                    {recipe.restTime && (
+                                      <> (Rest: {recipe.restTime})</>
+                                    )}
                                   </div>
                                 </div>
                               </div>

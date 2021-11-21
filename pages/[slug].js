@@ -12,10 +12,10 @@ import {
   ListGroup,
   Row,
 } from "react-bootstrap";
-import { createRef, useEffect, useRef, useState } from "react";
+import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { CgBowl } from "react-icons/cg";
 import { IoMdStopwatch } from "react-icons/io";
-import { GiCookingPot } from "react-icons/gi";
+import { GiCookingPot, GiBubblingBowl } from "react-icons/gi";
 import YouTube from "react-youtube";
 import { useRecipeContext } from "../store/recipeState";
 import { PropTypes } from "prop-types";
@@ -105,11 +105,15 @@ export default function Recipe({ data }) {
     notes,
     cookTime,
     prepTime,
+    restTime,
     youTubeUrls,
     ingredients,
     instructions,
     slug,
   } = currentRecipe;
+
+  const timeCols = useMemo(() => (restTime ? 3 : 4), [restTime]);
+
   const iconStyle = { fontSize: "3em", marginBottom: "0.2em" };
 
   const printPage = async () => {
@@ -170,7 +174,7 @@ export default function Recipe({ data }) {
             <Accordion.Collapse eventKey="0">
               <Card.Body>
                 <Row>
-                  <Col md={4}>
+                  <Col md={timeCols}>
                     <Row>
                       <CgBowl style={iconStyle} />
                     </Row>
@@ -181,7 +185,7 @@ export default function Recipe({ data }) {
                       </div>
                     </Row>
                   </Col>
-                  <Col md={4}>
+                  <Col md={timeCols}>
                     <Row>
                       <GiCookingPot style={iconStyle} />
                     </Row>
@@ -192,7 +196,7 @@ export default function Recipe({ data }) {
                       </div>
                     </Row>
                   </Col>
-                  <Col md={4}>
+                  <Col md={timeCols}>
                     <Row>
                       <IoMdStopwatch style={iconStyle} />
                     </Row>
@@ -203,6 +207,19 @@ export default function Recipe({ data }) {
                       </div>
                     </Row>
                   </Col>
+                  {restTime && (
+                    <Col md={timeCols}>
+                      <Row>
+                        <GiBubblingBowl style={iconStyle} />
+                      </Row>
+                      <Row className="d-flex justify-content-center">
+                        Rest/Marinade:{" "}
+                        <div className="d-flex justify-content-center">
+                          {restTime}
+                        </div>
+                      </Row>
+                    </Col>
+                  )}
                 </Row>
               </Card.Body>
             </Accordion.Collapse>
