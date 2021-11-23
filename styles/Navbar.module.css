@@ -17,4 +17,5 @@
   position: absolute;
   z-index: 8000;
   white-space: nowrap;
+  background-color: white;
 }

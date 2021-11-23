@@ -81,14 +81,13 @@ export default function RecipeNavbar() {
             className={styles.sidebar}
           >
             <Navbar
-              bg="light"
               variant="light"
               fixed="top"
               className="w-100 position-relative me-2"
             >
               <Navbar.Collapse className="h-100">
                 <Container className="vh-100 me-1">
-                  <div className="sticky-top bg-light mb-2">
+                  <div className="sticky-top mb-2">
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <Navbar.Brand href="/">Recipes</Navbar.Brand>
@@ -113,7 +112,7 @@ export default function RecipeNavbar() {
                           onChange={(e) => setSearch(e.target.value)}
                         />
                       </Form>
-                      <Nav className="mr-auto d-block w-100">
+                      <Nav className="mr-auto d-block w-100 pb-5">
                         {(displayedRecipes ?? []).map((recipe) => (
                           <Nav.Link key={recipe.title} href={`/${recipe.slug}`}>
                             <div className="d-flex">
