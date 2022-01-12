@@ -22,7 +22,7 @@
     "jspdf": "^2.4.0",
     "luxon": "^2.0.2",
     "magic-sdk": "^6.2.0",
-    "next": "^12.0.1",
+    "next": "^12.0.5",
     "next-auth": "^3.29.0",
     "next-images": "^1.8.1",
     "next-sanity": "^0.4.0",
