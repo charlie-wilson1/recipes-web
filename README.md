@@ -2,7 +2,7 @@
 
 This project is no longer being maintained. The new project can be found at [gardner-web-tech](https://github.com/AJax2012/gardner-web-tech) in a monorepo to keep the code a bit more organized and allow me to deploy multiple projects at once.
 
-#Notes
+## Notes
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
