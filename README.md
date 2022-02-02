@@ -1,5 +1,9 @@
 # Recipes Web
 
+This project is no longer being maintained. The new project can be found at [gardner-web-tech](https://github.com/AJax2012/gardner-web-tech) in a monorepo to keep the code a bit more organized and allow me to deploy multiple projects at once.
+
+#Notes
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 This project combined with the [recipes-studio](https://github.com/ajax2012/recipes-studio) app should give you an almost free method of hosting and managing your favorite recipes. Amount of users for CMS: 3. I _highly_ recommend adding whitelisted emails to your Magic link application. This will make it so only people you give permission to have read-only access to your recipes. **I do not accept fault if you add copyrighted material and host it on your own project; I do not have control over your personal CMS.**
